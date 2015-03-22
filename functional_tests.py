@@ -31,16 +31,29 @@ class NewVisitorTest(unittest.TestCase):
         inputbox.send_keys('Buy feathers')
         inputbox.send_keys(Keys.ENTER)
 
-
         #The page updates and lists "1: Buy feathers" as a to-do item
         table = self.browser.find_element_by_id('id_list_table')
         rows = table.find_elements_by_tag_name('tr')
-        self.assertTrue(
-            any(row.text == '1: Buy feathers' for row in rows),
-            "New to-do item did not appear in table"
-        )
+        self.assertIn('Buy feathers', [row.text for row in rows])
         
-        #Add another item:
+        #There is still a text box inviting us to add another item. We enter
+        # use feathers to make a fly.
+        inputbox = self.browser.find_element_by_id('id_new_item')
+        inputbox.send_keys('Use feathers to make a fly')
+        inputbox.send_keys(Keys.ENTER)
+
+        #The Page updates again, and now shows both items on the list:
+        table = self.browser.find_element_by_id('id_list_table')
+        rows = table.find_elements_by_tag_name('tr')
+        self.assertIn('Buy feathers', [row.text for row in rows])
+        self.assertIn(
+            '2: Use feathers to make a fly',
+            [row.text for row in rows]
+        )
+
+        #does it remember the list?
+        #the site generates a random URL
+        #xplanitory text
         self.fail('Finish the test!')
 
 
