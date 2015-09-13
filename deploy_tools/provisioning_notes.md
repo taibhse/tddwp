@@ -1,4 +1,4 @@
-Provissioning a new site
+Provisioning a new site
 ========================
 
 ## Required packages:
